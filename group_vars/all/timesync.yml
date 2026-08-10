@@ -1,0 +1,12 @@
+---
+# Fleet-wide timesync (chrony/NTP) baseline
+
+timesync_ntp_servers:
+  - hostname: 0.rhel.pool.ntp.org
+    iburst: true
+  - hostname: 1.rhel.pool.ntp.org
+    iburst: true
+  - hostname: 2.rhel.pool.ntp.org
+    iburst: true
+  - hostname: 3.rhel.pool.ntp.org
+    iburst: true

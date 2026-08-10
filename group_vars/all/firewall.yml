@@ -1,0 +1,27 @@
+---
+# Fleet-wide firewall baseline
+# Dict keys are merged with group and host overlays, then converted to lists in tasks/prepare_vars.yml.
+
+firewall_previous_state: replaced
+
+firewall_baseline_dict:
+  allow_ssh_public:
+    zone: public
+    state: enabled
+    service:
+      - ssh
+
+  define_mgmt_zone:
+    zone: mgmt
+    state: present
+
+  allow_ssh_cockpit_mgmt:
+    zone: mgmt
+    state: enabled
+    service:
+      - ssh
+      - cockpit
+
+  set_default_zone:
+    set_default_zone: public
+    state: enabled

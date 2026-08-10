@@ -1,0 +1,14 @@
+---
+# Fleet-wide kernel settings baseline
+# Dict format — merged with group and host overlays in prepare_vars.yml.
+
+kernel_settings_baseline:
+  vm_swappiness:
+    name: vm.swappiness
+    value: "10"
+  net_core_somaxconn:
+    name: net.core.somaxconn
+    value: "1024"
+  fs_file_max:
+    name: fs.file-max
+    value: "131072"

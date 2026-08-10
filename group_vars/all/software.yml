@@ -1,6 +1,14 @@
 ---
-# Fleet-wide repository intent. Registration credentials are platform secrets
-# and will be supplied through the AAP execution context.
+# Fleet-wide repositories required by RHEL System Roles and their dependencies.
+# Registration uses the activation key issued for this demo subscription.
+
+rhc_organization: "6340056"
+
+rhc_auth:
+  activation_keys:
+    keys:
+      - "0a1e389d-12ca-4ad2-8fcb-7874b8fae877"
+
 rhc_repos_baseline:
   - name: rhel-9-for-x86_64-baseos-rpms
     state: enabled

@@ -1,0 +1,23 @@
+---
+# Fleet-wide network interface baseline
+# Management interface (DHCP pod network).
+# Uncomment static_internal during the demo to add the VLAN interface.
+
+network_connections_baseline:
+  primary_dhcp:
+    name: primary_dhcp
+    type: ethernet
+    state: up
+    ip:
+      dhcp4: true
+
+#   static_internal:
+#     name: static_internal
+#     type: ethernet
+#     state: up
+#     ip:
+#       dhcp4: false
+#       ipv6_disabled: true
+
+  cleanup_all_other_profiles:
+    persistent_state: absent

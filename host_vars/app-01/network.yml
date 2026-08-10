@@ -1,0 +1,12 @@
+---
+# Host-specific network identity for app-01.
+
+network_host_overlay:
+  primary_dhcp:
+    mac: "CHANGE_ME_APP01_DHCP_MAC"
+
+#   static_internal:
+#     mac: "CHANGE_ME_APP01_INTERNAL_MAC"
+#     ip:
+#       address:
+#         - CHANGE_ME_APP01_INTERNAL_IP/24

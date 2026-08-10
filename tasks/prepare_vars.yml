@@ -1,7 +1,66 @@
 ---
-# This transformation layer keeps human-facing Git declarations separate from
-# the list structures expected by RHEL System Roles.
+# This file transforms GitOps-declared dict structures into the list format
+# expected by RHEL System Roles. The merge hierarchy is:
+#   baseline (group_vars/all) -> group overlay (group_vars/<group>) -> host overlay (host_vars/<host>)
+# Each step uses combine(..., recursive=True) so the more specific layer wins.
 
-- name: Prepare repository declarations
+- name: Prepare network connections
   ansible.builtin.set_fact:
-    rhc_repositories: "{{ rhc_repos_baseline | default([]) }}"
+    network_connections: "{{ _merged.values() | list }}"
+  vars:
+    _base: "{{ network_connections_baseline | default({}) }}"
+    _group: "{{ network_group_overlay | default({}) }}"
+    _host: "{{ network_host_overlay | default({}) }}"
+    _merged: "{{ _base | combine(_group, recursive=True) | combine(_host, recursive=True) }}"
+
+- name: Prepare storage pools and volumes
+  ansible.builtin.set_fact:
+    storage_pools: "{{ storage_pools | default([]) + [item | combine({'volumes': item.volumes.values() | list} if 'volumes' in item else {})] }}"
+  loop: "{{ _merged.values() | list }}"
+  vars:
+    _base: "{{ storage_baseline_pools | default({}) }}"
+    _group: "{{ storage_group_pools | default({}) }}"
+    _host: "{{ storage_host_pools | default({}) }}"
+    _merged: "{{ _base | combine(_group, recursive=True) | combine(_host, recursive=True) }}"
+
+- name: Prepare repository list
+  ansible.builtin.set_fact:
+    rhc_repositories: "{{ (rhc_repos_baseline | default([])) + (rhc_repos_group | default([])) + (rhc_repos_host | default([])) }}"
+
+- name: Prepare SSHD configuration
+  ansible.builtin.set_fact:
+    sshd: "{{ _base | combine(_group, recursive=True) | combine(_host, recursive=True) }}"
+  vars:
+    _base: "{{ sshd_baseline_config | default({}) }}"
+    _group: "{{ sshd_group_overrides | default({}) }}"
+    _host: "{{ sshd_host_overrides | default({}) }}"
+
+- name: Prepare sudoers configuration
+  ansible.builtin.set_fact:
+    sudo_sudoers_files: "{{ sudo_sudoers_files | default([]) + [_f | combine({'user_specifications': _f.user_spec_dict.values() | list})] }}"
+  loop: "{{ _merged.values() | list }}"
+  loop_control:
+    loop_var: _f
+  vars:
+    _base: "{{ sudo_baseline_files | default({}) }}"
+    _group: "{{ sudo_group_files | default({}) }}"
+    _host: "{{ sudo_host_files | default({}) }}"
+    _merged: "{{ _base | combine(_group, recursive=True) | combine(_host, recursive=True) }}"
+
+- name: Prepare firewall configuration
+  ansible.builtin.set_fact:
+    firewall: "{{ [{ 'previous': firewall_previous_state | default('replaced') }] + _merged.values() | list }}"
+  vars:
+    _base: "{{ firewall_baseline_dict | default({}) }}"
+    _group: "{{ firewall_group_dict | default({}) }}"
+    _host: "{{ firewall_host_dict | default({}) }}"
+    _merged: "{{ _base | combine(_group, recursive=True) | combine(_host, recursive=True) }}"
+
+- name: Prepare kernel settings
+  ansible.builtin.set_fact:
+    kernel_settings_sysctl: "{{ _merged.values() | list }}"
+  vars:
+    _base: "{{ kernel_settings_baseline | default({}) }}"
+    _group: "{{ kernel_settings_group | default({}) }}"
+    _host: "{{ kernel_settings_host | default({}) }}"
+    _merged: "{{ _base | combine(_group, recursive=True) | combine(_host, recursive=True) }}"

@@ -1,0 +1,45 @@
+---
+# Fleet-wide sudo policy baseline
+# Enforces authorized-only sudoers files and standard RHEL defaults.
+
+sudo_remove_unauthorized_included_files: true
+
+sudo_baseline_files:
+  main_sudoers:
+    path: /etc/sudoers
+    defaults:
+      - "!visiblepw"
+      - "always_set_home"
+      - "match_group_by_gid"
+      - "always_query_group_plugin"
+      - "env_reset"
+      - "secure_path":
+          - /sbin
+          - /bin
+          - /usr/sbin
+          - /usr/bin
+      - "env_keep":
+          - "COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS"
+          - "MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE"
+          - "LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES"
+          - "LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE"
+          - "LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY"
+    user_spec_dict:
+      root_all:
+        users: ["root"]
+        hosts: ["ALL"]
+        operators: ["ALL"]
+        commands: ["ALL"]
+      wheel_admin:
+        users: ["%wheel"]
+        hosts: ["ALL"]
+        operators: ["ALL"]
+        commands: ["ALL"]
+      cloud_user_admin:
+        users: ["cloud-user"]
+        hosts: ["ALL"]
+        operators: ["ALL"]
+        commands: ["ALL"]
+        tags: ["NOPASSWD"]
+    include_directories:
+      - /etc/sudoers.d

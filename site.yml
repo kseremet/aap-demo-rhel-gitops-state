@@ -1,6 +1,8 @@
 # Description: Reconcile declared RHEL state through Red Hat RHEL System Roles.
+# This is the single entry point that AAP runs when the Git repo changes.
+# Run: ansible-playbook site.yml
 ---
-- name: Reconcile RHEL GitOps state
+- name: RHEL GitOps — Declarative Fleet Reconciliation
   hosts: all
   become: true
   gather_facts: true
@@ -9,12 +11,69 @@
     - redhat.rhel_system_roles
 
   tasks:
-    - name: Transform declared state into role-compatible variables
+    - name: Transform GitOps dict variables into role-compatible lists
       ansible.builtin.import_tasks: tasks/prepare_vars.yml
 
-    # Role invocations will be added in the implementation phase.
-    - name: Confirm desired-state scaffold is loaded
-      ansible.builtin.assert:
-        that:
-          - inventory_hostname is defined
-        quiet: true
+    - name: Wait for Red Hat subscription DNS to become available
+      ansible.builtin.command: getent hosts subscription.rhsm.redhat.com
+      register: rhsm_dns_lookup
+      changed_when: false
+      retries: 6
+      delay: 5
+      until: rhsm_dns_lookup.rc == 0
+
+    - name: Check Red Hat subscription status
+      ansible.builtin.command: subscription-manager identity
+      register: rhsm_identity
+      changed_when: false
+      failed_when: rhsm_identity.rc not in [0, 1]
+
+    # The rhc role's registration task is not safe to repeat with an
+    # activation key on systems that are already registered.
+    - name: Register unregistered systems and configure repositories
+      ansible.builtin.include_role:
+        name: redhat.rhel_system_roles.rhc
+      when: rhsm_identity.rc != 0
+
+    - name: Configure repositories on already-registered systems
+      ansible.builtin.command:
+        argv:
+          - subscription-manager
+          - repos
+          - "--enable={{ item.name }}"
+      loop: "{{ rhc_repositories }}"
+      when: rhsm_identity.rc == 0
+      changed_when: false
+
+    - name: Enforce timesync (NTP/chrony)
+      ansible.builtin.include_role:
+        name: redhat.rhel_system_roles.timesync
+
+    - name: Enforce network interface configuration
+      ansible.builtin.include_role:
+        name: redhat.rhel_system_roles.network
+
+    - name: Enforce storage layout
+      ansible.builtin.include_role:
+        name: redhat.rhel_system_roles.storage
+
+    - name: Enforce SSH hardening
+      ansible.builtin.include_role:
+        name: redhat.rhel_system_roles.sshd
+
+    - name: Enforce sudo policy
+      ansible.builtin.include_role:
+        name: redhat.rhel_system_roles.sudo
+
+    - name: Enforce firewall rules
+      ansible.builtin.include_role:
+        name: redhat.rhel_system_roles.firewall
+
+    - name: Enforce kernel tuning
+      ansible.builtin.include_role:
+        name: redhat.rhel_system_roles.kernel_settings
+
+    - name: Wait for connection to settle after network changes
+      ansible.builtin.wait_for_connection:
+        delay: 5
+        timeout: 60

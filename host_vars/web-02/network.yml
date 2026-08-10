@@ -1,0 +1,12 @@
+---
+# Host-specific network identity for web-02.
+
+network_host_overlay:
+  primary_dhcp:
+    mac: "CHANGE_ME_WEB02_DHCP_MAC"
+
+#   static_internal:
+#     mac: "CHANGE_ME_WEB02_INTERNAL_MAC"
+#     ip:
+#       address:
+#         - CHANGE_ME_WEB02_INTERNAL_IP/24

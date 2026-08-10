@@ -1,0 +1,16 @@
+---
+# Fleet-wide storage baseline
+# Every RHEL host gets a standard LVM data volume.
+
+storage_baseline_pools:
+  data_pool:
+    name: vg_data
+    type: lvm
+    state: present
+    volumes:
+      data_vol:
+        name: lv_data
+        size: 2g
+        mount_point: /data
+        fs_type: xfs
+        state: present

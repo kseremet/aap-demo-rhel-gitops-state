@@ -1,0 +1,7 @@
+---
+# This transformation layer keeps human-facing Git declarations separate from
+# the list structures expected by RHEL System Roles.
+
+- name: Prepare repository declarations
+  ansible.builtin.set_fact:
+    rhc_repositories: "{{ rhc_repos_baseline | default([]) }}"

@@ -1,0 +1,20 @@
+# Description: Reconcile declared RHEL state through Red Hat RHEL System Roles.
+---
+- name: Reconcile RHEL GitOps state
+  hosts: all
+  become: true
+  gather_facts: true
+  collections:
+    - ansible.builtin
+    - redhat.rhel_system_roles
+
+  tasks:
+    - name: Transform declared state into role-compatible variables
+      ansible.builtin.import_tasks: tasks/prepare_vars.yml
+
+    # Role invocations will be added in the implementation phase.
+    - name: Confirm desired-state scaffold is loaded
+      ansible.builtin.assert:
+        that:
+          - inventory_hostname is defined
+        quiet: true

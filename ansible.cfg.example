@@ -1,0 +1,8 @@
+[defaults]
+collections_path = collections
+interpreter_python = auto_silent
+host_key_checking = false
+retry_files_save_path = /tmp
+forks = 5
+timeout = 30
+deprecation_warnings = false

@@ -1,0 +1,8 @@
+---
+# Fleet-wide repository intent. Registration credentials are platform secrets
+# and will be supplied through the AAP execution context.
+rhc_repos_baseline:
+  - name: rhel-9-for-x86_64-baseos-rpms
+    state: enabled
+  - name: rhel-9-for-x86_64-appstream-rpms
+    state: enabled

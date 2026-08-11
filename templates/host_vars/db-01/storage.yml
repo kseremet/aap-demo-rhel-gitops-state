@@ -1,0 +1,10 @@
+---
+# Host-specific storage disk bindings for db-01.
+
+storage_host_pools:
+  data_pool:
+    disks:
+      - /dev/disk/by-id/virtio-data-disk01
+#   db_data_pool:
+#     disks:
+#       - /dev/disk/by-id/virtio-db-disk01

@@ -1,0 +1,14 @@
+---
+# Host-specific network identity for web-01.
+# MAC values are populated from the platform inventory; change the
+# CHANGE_ME_* placeholders during the demo.
+
+network_host_overlay:
+  primary_dhcp:
+    mac: "CHANGE_ME_WEB01_DHCP_MAC"
+
+#   static_internal:
+#     mac: "CHANGE_ME_WEB01_INTERNAL_MAC"
+#     ip:
+#       address:
+#         - CHANGE_ME_WEB01_INTERNAL_IP/24

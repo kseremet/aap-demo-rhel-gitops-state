@@ -1,0 +1,11 @@
+---
+# Web server group firewall overlay.
+# Uncomment during the demo to open HTTP/HTTPS for web servers.
+
+# firewall_group_dict:
+#   allow_http:
+#     zone: public
+#     state: enabled
+#     service:
+#       - http
+#       - https

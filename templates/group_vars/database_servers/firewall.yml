@@ -1,0 +1,12 @@
+---
+# Database server group firewall overlay.
+# Uncomment during the demo to open PostgreSQL port (restricted to app subnet).
+
+# firewall_group_dict:
+#   allow_postgres:
+#     zone: public
+#     state: enabled
+#     port:
+#       - 5432/tcp
+#     rich_rule:
+#       - 'rule family="ipv4" source address="CHANGE_ME_APP_SUBNET" port port="5432" protocol="tcp" accept'

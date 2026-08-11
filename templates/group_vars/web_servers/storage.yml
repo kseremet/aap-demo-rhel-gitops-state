@@ -1,0 +1,16 @@
+---
+# Web server group storage overlay.
+# Uncomment during the demo to provision /var/www LVM volume.
+
+# storage_group_pools:
+#   web_content_pool:
+#     name: vg_web
+#     type: lvm
+#     state: present
+#     volumes:
+#       web_content_vol:
+#         name: lv_www
+#         size: 10g
+#         mount_point: /var/www
+#         fs_type: xfs
+#         state: present

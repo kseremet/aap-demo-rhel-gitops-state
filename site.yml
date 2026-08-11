@@ -14,36 +14,9 @@
     - name: Transform GitOps dict variables into role-compatible lists
       ansible.builtin.import_tasks: tasks/prepare_vars.yml
 
-    - name: Wait for Red Hat subscription DNS to become available
-      ansible.builtin.command: getent hosts subscription.rhsm.redhat.com
-      register: rhsm_dns_lookup
-      changed_when: false
-      retries: 6
-      delay: 5
-      until: rhsm_dns_lookup.rc == 0
-
-    - name: Check Red Hat subscription status
-      ansible.builtin.command: subscription-manager identity
-      register: rhsm_identity
-      changed_when: false
-      failed_when: rhsm_identity.rc not in [0, 1]
-
-    # The rhc role's registration task is not safe to repeat with an
-    # activation key on systems that are already registered.
-    - name: Register unregistered systems and configure repositories
+    - name: Enforce Subscriptions and Insights
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.rhc
-      when: rhsm_identity.rc != 0
-
-    - name: Configure repositories on already-registered systems
-      ansible.builtin.command:
-        argv:
-          - subscription-manager
-          - repos
-          - "--enable={{ item.name }}"
-      loop: "{{ rhc_repositories }}"
-      when: rhsm_identity.rc == 0
-      changed_when: false
 
     - name: Enforce timesync (NTP/chrony)
       ansible.builtin.include_role:

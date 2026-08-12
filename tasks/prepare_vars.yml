@@ -5,6 +5,7 @@
 # Each step uses combine(..., recursive=True) so the more specific layer wins.
 
 - name: Prepare network connections
+  tags: [network, networking]
   ansible.builtin.set_fact:
     network_connections: "{{ _merged.values() | list }}"
   vars:
@@ -14,6 +15,7 @@
     _merged: "{{ _base | combine(_group, recursive=True) | combine(_host, recursive=True) }}"
 
 - name: Prepare storage pools and volumes
+  tags: [storage, disk]
   ansible.builtin.set_fact:
     storage_pools: "{{ storage_pools | default([]) + [item | combine({'volumes': item.volumes.values() | list} if 'volumes' in item else {})] }}"
   loop: "{{ _merged.values() | list }}"
@@ -24,10 +26,12 @@
     _merged: "{{ _base | combine(_group, recursive=True) | combine(_host, recursive=True) }}"
 
 - name: Prepare repository list
+  tags: [rhc, subscription]
   ansible.builtin.set_fact:
     rhc_repositories: "{{ (rhc_repos_baseline | default([])) + (rhc_repos_group | default([])) + (rhc_repos_host | default([])) }}"
 
 - name: Prepare SSHD configuration
+  tags: [sshd, ssh]
   ansible.builtin.set_fact:
     sshd: "{{ _base | combine(_group, recursive=True) | combine(_host, recursive=True) }}"
   vars:
@@ -36,6 +40,7 @@
     _host: "{{ sshd_host_overrides | default({}) }}"
 
 - name: Prepare sudoers configuration
+  tags: [sudo]
   ansible.builtin.set_fact:
     sudo_sudoers_files: "{{ sudo_sudoers_files | default([]) + [_f | combine({'user_specifications': _f.user_spec_dict.values() | list})] }}"
   loop: "{{ _merged.values() | list }}"
@@ -48,6 +53,7 @@
     _merged: "{{ _base | combine(_group, recursive=True) | combine(_host, recursive=True) }}"
 
 - name: Prepare firewall configuration
+  tags: [firewall, fw]
   ansible.builtin.set_fact:
     firewall: "{{ [{ 'previous': firewall_previous_state | default('replaced') }] + _merged.values() | list }}"
   vars:
@@ -57,6 +63,7 @@
     _merged: "{{ _base | combine(_group, recursive=True) | combine(_host, recursive=True) }}"
 
 - name: Prepare kernel settings
+  tags: [kernel, kernel_settings, sysctl]
   ansible.builtin.set_fact:
     kernel_settings_sysctl: "{{ _merged.values() | list }}"
   vars:

@@ -17,7 +17,6 @@
   tasks:
     - name: Transform GitOps dict variables into role-compatible lists
       ansible.builtin.import_tasks: tasks/prepare_vars.yml
-      tags: always
 
     - name: Enforce Subscriptions and Insights
       ansible.builtin.include_role:

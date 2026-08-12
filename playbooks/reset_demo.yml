@@ -11,40 +11,40 @@
 
   vars:
     skeleton_map:
-      - src: templates/host_vars/web-01/network.yml
-        dest: host_vars/web-01/network.yml
-      - src: templates/host_vars/web-01/storage.yml
-        dest: host_vars/web-01/storage.yml
-      - src: templates/host_vars/web-02/network.yml
-        dest: host_vars/web-02/network.yml
-      - src: templates/host_vars/web-02/storage.yml
-        dest: host_vars/web-02/storage.yml
-      - src: templates/host_vars/db-01/network.yml
-        dest: host_vars/db-01/network.yml
-      - src: templates/host_vars/db-01/storage.yml
-        dest: host_vars/db-01/storage.yml
-      - src: templates/host_vars/app-01/network.yml
-        dest: host_vars/app-01/network.yml
-      - src: templates/host_vars/app-01/storage.yml
-        dest: host_vars/app-01/storage.yml
-      - src: templates/group_vars/web_servers/firewall.yml
-        dest: group_vars/web_servers/firewall.yml
-      - src: templates/group_vars/web_servers/kernel_settings.yml
-        dest: group_vars/web_servers/kernel_settings.yml
-      - src: templates/group_vars/web_servers/storage.yml
-        dest: group_vars/web_servers/storage.yml
-      - src: templates/group_vars/database_servers/firewall.yml
-        dest: group_vars/database_servers/firewall.yml
-      - src: templates/group_vars/database_servers/kernel_settings.yml
-        dest: group_vars/database_servers/kernel_settings.yml
-      - src: templates/group_vars/database_servers/storage.yml
-        dest: group_vars/database_servers/storage.yml
-      - src: templates/group_vars/app_servers/firewall.yml
-        dest: group_vars/app_servers/firewall.yml
-      - src: templates/group_vars/app_servers/kernel_settings.yml
-        dest: group_vars/app_servers/kernel_settings.yml
-      - src: templates/group_vars/app_servers/storage.yml
-        dest: group_vars/app_servers/storage.yml
+      - src: ../templates/host_vars/web-01/network.yml
+        dest: ../host_vars/web-01/network.yml
+      - src: ../templates/host_vars/web-01/storage.yml
+        dest: ../host_vars/web-01/storage.yml
+      - src: ../templates/host_vars/web-02/network.yml
+        dest: ../host_vars/web-02/network.yml
+      - src: ../templates/host_vars/web-02/storage.yml
+        dest: ../host_vars/web-02/storage.yml
+      - src: ../templates/host_vars/db-01/network.yml
+        dest: ../host_vars/db-01/network.yml
+      - src: ../templates/host_vars/db-01/storage.yml
+        dest: ../host_vars/db-01/storage.yml
+      - src: ../templates/host_vars/app-01/network.yml
+        dest: ../host_vars/app-01/network.yml
+      - src: ../templates/host_vars/app-01/storage.yml
+        dest: ../host_vars/app-01/storage.yml
+      - src: ../templates/group_vars/web_servers/firewall.yml
+        dest: ../group_vars/web_servers/firewall.yml
+      - src: ../templates/group_vars/web_servers/kernel_settings.yml
+        dest: ../group_vars/web_servers/kernel_settings.yml
+      - src: ../templates/group_vars/web_servers/storage.yml
+        dest: ../group_vars/web_servers/storage.yml
+      - src: ../templates/group_vars/database_servers/firewall.yml
+        dest: ../group_vars/database_servers/firewall.yml
+      - src: ../templates/group_vars/database_servers/kernel_settings.yml
+        dest: ../group_vars/database_servers/kernel_settings.yml
+      - src: ../templates/group_vars/database_servers/storage.yml
+        dest: ../group_vars/database_servers/storage.yml
+      - src: ../templates/group_vars/app_servers/firewall.yml
+        dest: ../group_vars/app_servers/firewall.yml
+      - src: ../templates/group_vars/app_servers/kernel_settings.yml
+        dest: ../group_vars/app_servers/kernel_settings.yml
+      - src: ../templates/group_vars/app_servers/storage.yml
+        dest: ../group_vars/app_servers/storage.yml
 
   tasks:
     - name: Restore skeleton files

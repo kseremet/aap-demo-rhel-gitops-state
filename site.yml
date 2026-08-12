@@ -1,6 +1,10 @@
 # Description: Reconcile declared RHEL state through Red Hat RHEL System Roles.
 # This is the single entry point that AAP runs when the Git repo changes.
-# Run: ansible-playbook site.yml
+# Tags let you run a single role during development:
+#   ansible-playbook site.yml --tags networking
+#   ansible-playbook site.yml --tags storage
+#   ansible-playbook site.yml --tags firewall,kernel
+#   ansible-playbook site.yml --skip-tags rhc
 ---
 - name: RHEL GitOps — Declarative Fleet Reconciliation
   hosts: all
@@ -13,40 +17,50 @@
   tasks:
     - name: Transform GitOps dict variables into role-compatible lists
       ansible.builtin.import_tasks: tasks/prepare_vars.yml
+      tags: always
 
     - name: Enforce Subscriptions and Insights
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.rhc
+      tags: [rhc, subscription]
 
     - name: Enforce timesync (NTP/chrony)
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.timesync
+      tags: [timesync, ntp]
 
     - name: Enforce network interface configuration
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.network
+      tags: [network, networking]
 
     - name: Enforce storage layout
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.storage
+      tags: [storage, disk]
 
     - name: Enforce SSH hardening
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.sshd
+      tags: [sshd, ssh]
 
     - name: Enforce sudo policy
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.sudo
+      tags: [sudo]
 
     - name: Enforce firewall rules
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.firewall
+      tags: [firewall, fw]
 
     - name: Enforce kernel tuning
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.kernel_settings
+      tags: [kernel, kernel_settings, sysctl]
 
     - name: Wait for connection to settle after network changes
       ansible.builtin.wait_for_connection:
         delay: 5
         timeout: 60
+      tags: always

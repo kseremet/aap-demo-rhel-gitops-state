@@ -1,15 +1,15 @@
 ---
-# Host-specific network identity for web-02.
+# Host-specific network identity for web-01.
+# MAC values are populated from the platform inventory; change the
+# CHANGE_ME_* placeholders during the demo.
+# The baseline group_vars/all/networking.yml provides name, type, and state.
 
 network_host_overlay:
   primary_dhcp:
-    mac: "CHANGE_ME_WEB02_DHCP_MAC"
+    mac: "CHANGE_ME_WEB01_DHCP_MAC"
 
 #   static_internal:
-#     name: static_internal
-#     type: ethernet
-#     state: up
-#     mac: "CHANGE_ME_WEB02_INTERNAL_MAC"
+#     mac: "CHANGE_ME_WEB01_INTERNAL_MAC"
 #     ip:
 #       address:
-#         - CHANGE_ME_WEB02_INTERNAL_IP/24
+#         - CHANGE_ME_WEB01_INTERNAL_IP/24

@@ -1,14 +1,12 @@
 ---
 # Host-specific network identity for db-01.
+# The baseline group_vars/all/networking.yml provides name, type, and state.
 
 network_host_overlay:
   primary_dhcp:
     mac: "CHANGE_ME_DB01_DHCP_MAC"
 
 #   static_internal:
-#     name: static_internal
-#     type: ethernet
-#     state: up
 #     mac: "CHANGE_ME_DB01_INTERNAL_MAC"
 #     ip:
 #       address:

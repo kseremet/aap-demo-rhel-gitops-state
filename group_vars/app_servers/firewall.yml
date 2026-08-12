@@ -2,10 +2,10 @@
 # Application server group firewall overlay.
 # Uncomment during the demo to open REST API and metrics ports.
 
-# firewall_group_dict:
-#   allow_app:
-#     zone: public
-#     state: enabled
-#     port:
-#       - 8080/tcp
-#       - 9090/tcp
+firewall_group_dict:
+  allow_app:
+    zone: public
+    state: enabled
+    port:
+      - 8080/tcp
+      - 9090/tcp

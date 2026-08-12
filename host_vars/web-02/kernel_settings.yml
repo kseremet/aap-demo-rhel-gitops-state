@@ -1,0 +1,4 @@
+kernel_settings_host:
+  net_ipv4_tcp_max_syn_backlog:
+    name: net.ipv4.tcp_max_syn_backlog
+    value: "16384"

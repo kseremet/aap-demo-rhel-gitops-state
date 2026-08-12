@@ -8,6 +8,9 @@ network_host_overlay:
     mac: "CHANGE_ME_WEB01_DHCP_MAC"
 
 #   static_internal:
+#     name: static_internal
+#     type: ethernet
+#     state: up
 #     mac: "CHANGE_ME_WEB01_INTERNAL_MAC"
 #     ip:
 #       address:

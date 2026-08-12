@@ -5,10 +5,13 @@
 
 network_host_overlay:
   primary_dhcp:
-    mac: "CHANGE_ME_WEB01_DHCP_MAC"
+    mac: "02:a4:1a:55:68:27"
 
-#   static_internal:
-#     mac: "CHANGE_ME_WEB01_INTERNAL_MAC"
-#     ip:
-#       address:
-#         - CHANGE_ME_WEB01_INTERNAL_IP/24
+  static_internal:
+    name: static_internal
+    type: ethernet
+    state: up
+    mac: "02:a4:1a:55:68:28"
+    ip:
+      address:
+        - 192.168.152.10/24

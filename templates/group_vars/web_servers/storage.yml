@@ -10,7 +10,7 @@
 #     volumes:
 #       web_content_vol:
 #         name: lv_www
-#         size: 10g
+#         size: 5g
 #         mount_point: /var/www
 #         fs_type: xfs
 #         state: present

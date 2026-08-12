@@ -10,13 +10,13 @@
 #     volumes:
 #       db_data_vol:
 #         name: lv_db_data
-#         size: 50g
+#         size: 30g
 #         mount_point: /var/lib/pgsql
 #         fs_type: xfs
 #         state: present
 #       db_wal_vol:
 #         name: lv_db_wal
-#         size: 20g
+#         size: 11g
 #         mount_point: /var/lib/pgsql/wal
 #         fs_type: xfs
 #         state: present

@@ -5,6 +5,6 @@ storage_host_pools:
   data_pool:
     disks:
       - /dev/disk/by-id/virtio-data-disk01
-#   app_data_pool:
-#     disks:
-#       - /dev/disk/by-id/virtio-app-disk01
+  app_data_pool:
+    disks:
+      - /dev/disk/by-id/virtio-app-disk01

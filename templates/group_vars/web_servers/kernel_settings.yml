@@ -9,6 +9,6 @@
 #   net_ipv4_tcp_tw_reuse:
 #     name: net.ipv4.tcp_tw_reuse
 #     value: "1"
-#   net_ipv4_tcp_fin_timeout:
-#     name: net.ipv4.tcp_fin_timeout
-#     value: "15"
+#   net_ipv4_tcp_max_syn_backlog:
+#     name: net.ipv4.tcp_max_syn_backlog
+#     value: "8192"

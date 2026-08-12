@@ -2,19 +2,19 @@
 # Database server group kernel tuning overlay.
 # Uncomment during the demo to apply DB-optimized sysctl settings.
 
-# kernel_settings_group:
-#   vm_swappiness:
-#     name: vm.swappiness
-#     value: "1"
-#   vm_dirty_ratio:
-#     name: vm.dirty_ratio
-#     value: "15"
-#   vm_dirty_background_ratio:
-#     name: vm.dirty_background_ratio
-#     value: "5"
-#   kernel_shmmax:
-#     name: kernel.shmmax
-#     value: "8589934592"
-#   kernel_shmall:
-#     name: kernel.shmall
-#     value: "2097152"
+kernel_settings_group:
+  vm_swappiness:
+    name: vm.swappiness
+    value: "1"
+  vm_dirty_ratio:
+    name: vm.dirty_ratio
+    value: "15"
+  vm_dirty_background_ratio:
+    name: vm.dirty_background_ratio
+    value: "5"
+  kernel_shmmax:
+    name: kernel.shmmax
+    value: "8589934592"
+  kernel_shmall:
+    name: kernel.shmall
+    value: "2097152"

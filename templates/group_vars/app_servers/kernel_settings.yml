@@ -3,9 +3,6 @@
 # Uncomment during the demo to apply app-optimized file descriptor limits.
 
 # kernel_settings_group:
-#   net_core_somaxconn:
-#     name: net.core.somaxconn
-#     value: "65535"
 #   fs_file_max:
 #     name: fs.file-max
 #     value: "524288"

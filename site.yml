@@ -21,41 +21,57 @@
     - name: Enforce Subscriptions and Insights
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.rhc
+        apply:
+          tags: [rhc, subscription]
       tags: [rhc, subscription]
 
     - name: Enforce timesync (NTP/chrony)
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.timesync
+        apply:
+          tags: [timesync, ntp]
       tags: [timesync, ntp]
 
     - name: Enforce network interface configuration
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.network
+        apply:
+          tags: [network, networking]
       tags: [network, networking]
 
     - name: Enforce storage layout
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.storage
+        apply:
+          tags: [storage, disk]
       tags: [storage, disk]
 
     - name: Enforce SSH hardening
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.sshd
+        apply:
+          tags: [sshd, ssh]
       tags: [sshd, ssh]
 
     - name: Enforce sudo policy
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.sudo
+        apply:
+          tags: [sudo]
       tags: [sudo]
 
     - name: Enforce firewall rules
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.firewall
+        apply:
+          tags: [firewall, fw]
       tags: [firewall, fw]
 
     - name: Enforce kernel tuning
       ansible.builtin.include_role:
         name: redhat.rhel_system_roles.kernel_settings
+        apply:
+          tags: [kernel, kernel_settings, sysctl]
       tags: [kernel, kernel_settings, sysctl]
 
     - name: Wait for connection to settle after network changes

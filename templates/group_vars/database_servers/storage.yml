@@ -16,7 +16,7 @@
 #         state: present
 #       db_wal_vol:
 #         name: lv_db_wal
-#         size: 11g
+#         size: 10g
 #         mount_point: /var/lib/pgsql/wal
 #         fs_type: xfs
 #         state: present

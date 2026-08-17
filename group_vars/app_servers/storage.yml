@@ -2,15 +2,15 @@
 # Application server group storage overlay.
 # Uncomment during the demo to provision /opt/app LVM volume.
 
-storage_group_pools:
-  app_data_pool:
-    name: vg_app
-    type: lvm
-    state: present
-    volumes:
-      app_data_vol:
-        name: lv_app_data
-        size: 15g
-        mount_point: /opt/app
-        fs_type: xfs
-        state: present
+# storage_group_pools:
+#   app_data_pool:
+#     name: vg_app
+#     type: lvm
+#     state: present
+#     volumes:
+#       app_data_vol:
+#         name: lv_app_data
+#         size: 15g
+#         mount_point: /opt/app
+#         fs_type: xfs
+#         state: present

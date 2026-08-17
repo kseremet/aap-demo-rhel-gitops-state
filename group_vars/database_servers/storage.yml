@@ -2,21 +2,21 @@
 # Database server group storage overlay.
 # Uncomment during the demo to provision /var/lib/pgsql and WAL volumes.
 
-storage_group_pools:
-  db_data_pool:
-    name: vg_db
-    type: lvm
-    state: present
-    volumes:
-      db_data_vol:
-        name: lv_db_data
-        size: 30g
-        mount_point: /var/lib/pgsql
-        fs_type: xfs
-        state: present
-      db_wal_vol:
-        name: lv_db_wal
-        size: 11g
-        mount_point: /var/lib/pgsql/wal
-        fs_type: xfs
-        state: present
+# storage_group_pools:
+#   db_data_pool:
+#     name: vg_db
+#     type: lvm
+#     state: present
+#     volumes:
+#       db_data_vol:
+#         name: lv_db_data
+#         size: 30g
+#         mount_point: /var/lib/pgsql
+#         fs_type: xfs
+#         state: present
+#       db_wal_vol:
+#         name: lv_db_wal
+#         size: 10g
+#         mount_point: /var/lib/pgsql/wal
+#         fs_type: xfs
+#         state: present

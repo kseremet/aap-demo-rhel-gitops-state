@@ -142,7 +142,75 @@ git push
 
 Verify `/opt/app` exists only on app-01.
 
-### Phase 6 — Group kernel tuning
+### Phase 6 — Resize a group volume
+
+Show how a single edit grows a volume across every host in a group. Change the
+database WAL volume from `10g` to `11g` in
+`group_vars/database_servers/storage.yml`:
+
+```yaml
+      db_wal_vol:
+        name: lv_db_wal
+        size: 11g     # was 10g
+```
+
+Commit and reconcile:
+
+```bash
+git add group_vars/database_servers
+git commit -m "Grow database WAL volume to 11g"
+git push
+```
+
+Verify on db-01 that `lv_db_wal` grew to 11g:
+
+```bash
+ssh -i <key> cloud-user@<db-01-ip> sudo lvs vg_db
+```
+
+Explain: one Git change propagated the same resize to the whole database group.
+No manual `lvextend` or `xfs_growfs` was needed — the storage role performed
+both.
+
+### Phase 7 — Resize a single host volume
+
+Show how one host can override the group default with an incremental overlay.
+Add a `volumes` block to `host_vars/web-01/storage.yml` that grows the web
+content volume from `5g` to `6g`:
+
+```yaml
+storage_host_pools:
+  data_pool:
+    disks:
+      - /dev/disk/by-id/virtio-data-disk01
+  web_content_pool:
+    disks:
+      - /dev/disk/by-id/virtio-web-disk01
+    volumes:
+      web_content_vol:
+        size: 6g    # overrides the group default of 5g
+```
+
+Commit and reconcile:
+
+```bash
+git add host_vars/web-01
+git commit -m "Grow web-01 content volume to 6g"
+git push
+```
+
+Verify only web-01 grew to 6g while web-02 remains at 5g:
+
+```bash
+ssh -i <key> cloud-user@<web-01-ip> sudo lvs vg_web
+ssh -i <key> cloud-user@<web-02-ip> sudo lvs vg_web
+```
+
+Explain: the host overlay uses the same Kustomize-style merge — only the
+`size` field is provided at the host level, everything else comes from the
+group and fleet baselines.
+
+### Phase 8 — Group kernel tuning
 
 Uncomment the kernel tuning overlays for each server role:
 
@@ -167,7 +235,7 @@ git push
 Verify with `sysctl` on the target hosts. Each group has different optimal
 values while the fleet baseline remains unchanged.
 
-### Phase 7 — Group firewall rules
+### Phase 9 — Group firewall rules
 
 Uncomment the firewall overlays to open role-specific ports:
 
@@ -188,7 +256,7 @@ git commit -m "Open REST and metrics ports for app servers"
 git push
 ```
 
-### Phase 8 — Drift correction
+### Phase 10 — Drift correction
 
 Change one managed value manually on a target host, then launch the
 reconciliation job without changing Git. AAP restores the value declared by the

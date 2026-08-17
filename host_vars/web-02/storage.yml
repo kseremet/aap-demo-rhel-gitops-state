@@ -5,6 +5,6 @@ storage_host_pools:
   data_pool:
     disks:
       - /dev/disk/by-id/virtio-data-disk01
-  web_content_pool:
-    disks:
-      - /dev/disk/by-id/virtio-web-disk01
+#   web_content_pool:
+#     disks:
+#       - /dev/disk/by-id/virtio-web-disk01

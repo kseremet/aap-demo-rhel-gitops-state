@@ -2,10 +2,10 @@
 # Application server group kernel tuning overlay.
 # Uncomment during the demo to apply app-optimized file descriptor limits.
 
-kernel_settings_group:
-  fs_file_max:
-    name: fs.file-max
-    value: "524288"
-  fs_nr_open:
-    name: fs.nr_open
-    value: "524288"
+# kernel_settings_group:
+#   fs_file_max:
+#     name: fs.file-max
+#     value: "524288"
+#   fs_nr_open:
+#     name: fs.nr_open
+#     value: "524288"

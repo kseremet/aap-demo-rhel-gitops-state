@@ -2,10 +2,34 @@
 # Web server group firewall overlay.
 # Uncomment during the demo to open HTTP/HTTPS for web servers.
 
-firewall_group_dict:
-  allow_http:
-    zone: public
-    state: enabled
-    service:
-      - http
-      - https
+# firewall_group_dict:
+#   allow_http:
+#     zone: public
+#     state: enabled
+#     service:
+#       - http
+#       - https
+#
+#   # Remove management access from the public zone.
+#   # Web servers stay public for web traffic, but SSH and cockpit move to mgmt.
+#   remove_management_from_public:
+#     zone: public
+#     state: disabled
+#     service:
+#       - ssh
+#       - cockpit
+#       - dhcpv6-client
+#
+#   # Restrict admin access to the mgmt zone using a firewalld ipset.
+#   ipset_create_admin_access:
+#     ipset: admin_access
+#     ipset_type: "hash:ip"
+#     ipset_entries:
+#       - "192.168.1.100"
+#       - "10.0.0.50"
+#     state: present
+#
+#   bind_admin_access_to_mgmt:
+#     zone: mgmt
+#     source: "ipset:admin_access"
+#     state: enabled

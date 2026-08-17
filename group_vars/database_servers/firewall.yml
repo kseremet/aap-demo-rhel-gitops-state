@@ -9,4 +9,4 @@ firewall_group_dict:
     port:
       - 5432/tcp
     rich_rule:
-      - 'rule family="ipv4" source address="192.168.150.0/24" port port="5432" protocol="tcp" accept'
+      - 'rule family="ipv4" source address="192.168.152.0/24" port port="5432" protocol="tcp" accept'

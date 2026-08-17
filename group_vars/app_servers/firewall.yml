@@ -2,10 +2,24 @@
 # Application server group firewall overlay.
 # Uncomment during the demo to open REST API and metrics ports.
 
-firewall_group_dict:
-  allow_app:
-    zone: public
-    state: enabled
-    port:
-      - 8080/tcp
-      - 9090/tcp
+# firewall_group_dict:
+#   allow_app:
+#     zone: public
+#     state: enabled
+#     port:
+#       - 8080/tcp
+#       - 9090/tcp
+
+#   # Restrict admin access to the mgmt zone using a firewalld ipset.
+#   ipset_create_admin_access:
+#     ipset: admin_access
+#     ipset_type: "hash:ip"
+#     ipset_entries:
+#       - "192.168.1.100"
+#       - "10.0.0.50"
+#     state: present
+#
+#   bind_admin_access_to_mgmt:
+#     zone: mgmt
+#     source: "ipset:admin_access"
+#     state: enabled

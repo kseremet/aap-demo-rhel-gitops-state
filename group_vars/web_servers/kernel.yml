@@ -1,0 +1,5 @@
+---
+# Web-server kernel settings
+kernel_settings_group:
+  net.core.somaxconn:
+    value: "65535"

@@ -1,0 +1,6 @@
+---
+# Host-specific remediation for the observed web-01 drift.
+kernel_settings_host:
+  net_core_somaxconn:
+    name: net.core.somaxconn
+    value: "65535"

@@ -2,10 +2,10 @@
 # Web server group kernel tuning overlay.
 # Uncomment during the demo to apply web-optimized sysctl settings.
 
-# kernel_settings_group:
-#   net_core_somaxconn:
-#     name: net.core.somaxconn
-#     value: "65535"
+kernel_settings_group:
+  net_core_somaxconn:
+    name: net.core.somaxconn
+    value: "65535"
 #   net_ipv4_tcp_tw_reuse:
 #     name: net.ipv4.tcp_tw_reuse
 #     value: "1"
